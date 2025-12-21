@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行记 - 原初地球</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="bg-travels">
+    <div id="loader">
+        <div class="loader-content">
+            <div class="spinner"></div>
+            <div class="loader-text">INITIALIZING...</div>
+        </div>
+    </div>
+
+    <div class="particles-container">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+    </div>
+
+    <nav>
+        <a href="index.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+            <span>原点</span>
+        </a>
+        <a href="laws.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm9 17h-2.5v-7h-13v7H3v-8.21L12 4.69l9 8.1v8.21z"/></svg>
+            <span>法则</span>
+        </a>
+        <a href="travels.html" class="nav-item active">
+            <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 6l-2 10 2 2 2-2-2-10z" fill="currentColor"/></svg>
+            <span>行记</span>
+        </a>
+        <a href="echoes.html" class="nav-item">
+            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12h3v-2H3v2zm18-2v2h3v-2h-3zm-6-4h-2v12h2V6zm-6 4h2v4H9v-4z"/></svg>
+            <span>回响</span>
+        </a>
+    </nav>
+
+    <header>
+        <h1 class="main-title">行 旅 之 诗</h1>
+        <div class="sub-title">Journey Across The Prime Earth</div>
+    </header>
+
+    <div class="content-wrapper">
+        
+        <div class="journey-path-container">
+            <svg class="journey-svg" viewBox="0 0 200 2400" preserveAspectRatio="none">
+                <defs>
+                    <linearGradient id="pathGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                        <stop offset="0%" style="stop-color:var(--text-blue); stop-opacity:0" />
+                        <stop offset="5%" style="stop-color:var(--text-blue); stop-opacity:0.6" />
+                        <stop offset="98%" style="stop-color:var(--text-blue); stop-opacity:0.6" />
+                        <stop offset="100%" style="stop-color:var(--text-blue); stop-opacity:0" />
+                    </linearGradient>
+                    
+                    <filter id="glow">
+                        <feGaussianBlur stdDeviation="2.5" result="coloredBlur"/>
+                        <feMerge>
+                            <feMergeNode in="coloredBlur"/>
+                            <feMergeNode in="SourceGraphic"/>
+                        </feMerge>
+                    </filter>
+                </defs>
+                
+                <path d="M100,0 
+                         C100,200 150,400 100,600 
+                         C50,800 100,1000 100,1200 
+                         C100,1400 150,1600 100,1800 
+                         C50,2000 100,2200 100,2400" 
+                      fill="none" 
+                      stroke="url(#pathGradient)" 
+                      stroke-width="2" 
+                      filter="url(#glow)"
+                      class="animated-path"/>
+            </svg>
+            
+            <div class="path-end-icon">
+                <span class="end-dot"></span>
+                <span class="end-text">TO BE CONTINUED</span>
+            </div>
+        </div>
+        
+        <section class="story-block">
+            <div class="text-group">
+                <span class="chapter-tag reveal reveal-text">01</span>
+                <h2 class="location-name reveal reveal-text delay-100">坠星高地 · 触碰天穹</h2>
+                <p class="story-p reveal reveal-text delay-200">
+                    这里是世界的脊梁，空气稀薄得仿佛能听见血液流动的声音。
+                </p>
+                <p class="story-p reveal reveal-text delay-200">
+                    在这片永夜笼罩的高原上，陨石并非毁灭的象征，而是宇宙赠予的宝石。巨大的陨石坑散发着幽蓝的微光，像大地的眼睛，凝视着亿万年前出发的星光。晓星曾睡在发光的环形山中，感觉自己正漂浮在银河的中心。
+                </p>
+                <div class="quote reveal reveal-text delay-300">
+                    “如果大地是一座孤独的囚笼，那群星就是唯一的窗口。”
+                </div>
+            </div>
+            <div class="image-group">
+                <div class="img-wrapper reveal reveal-img delay-100">
+                    <img src="images/starfall.png" class="main-img" alt="坠星高地" onerror="this.src='https://placehold.co/800x500/1a237e/8c9eff?text=Starfall+Highland'">
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+                </div>
+                <img src="images/starfall-detail.png" class="inset-img reveal reveal-left delay-300" alt="发光的陨石" onerror="this.src='https://placehold.co/400x300/fff/1a237e?text=Glowing+Crater'">
+            </div>
+        </section>
+
+        <section class="story-block reverse">
+            <div class="text-group">
+                <span class="chapter-tag reveal reveal-text">02</span>
+                <h2 class="location-name reveal reveal-text delay-100">听风峡 · 大地的咽喉</h2>
+                <p class="story-p reveal reveal-text delay-200">
+                    巨大的岩石裂谷将大地撕开一道伤口，却成为了风的乐器。晓星曾坐在这里的悬崖上，听风穿过千疮百孔的岩壁。
+                </p>
+                <p class="story-p reveal reveal-text delay-200">
+                    那不是呼啸，而是大地的低语。这里的每一缕风都携带者远古的记忆：山川的隆起、海洋的干涸、以及某个未曾谋面的文明留下的最后一声叹息。
+                </p>
+                <div class="quote reveal reveal-text delay-300">
+                    “如果不去聆听，风就只是流动的空气；当你闭上眼，风便是这颗星球唯一的歌谣。”
+                </div>
+            </div>
+            <div class="image-group">
+                <div class="img-wrapper reveal reveal-img delay-100">
+                    <img src="images/echo-valley.png" class="main-img" alt="听风峡" onerror="this.src='https://placehold.co/800x500/f0f4f8/8fa1b3?text=Echo+Valley'">
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+                </div>
+                <img src="images/wind-trace.png" class="inset-img reveal reveal-right delay-300" alt="风痕" onerror="this.src='https://placehold.co/400x300/fff/8fa1b3?text=Wind+Details'">
+            </div>
+        </section>
+
+        <section class="story-block">
+            <div class="text-group">
+                <span class="chapter-tag reveal reveal-text">03</span>
+                <h2 class="location-name reveal reveal-text delay-100">静谧石林 · 凝固的刹那</h2>
+                <p class="story-p reveal reveal-text delay-200">
+                    这是一片不再生长的森林。树木维持着向天空伸展的姿态，却已化作坚硬的晶石。
+                </p>
+                <p class="story-p reveal reveal-text delay-200">
+                    在“生命固化”的法则下，枯荣失去了意义。每一片树叶都停留在它最完美的瞬间，连露珠都被永恒地锁定在叶尖。
+                </p>
+                <div class="quote reveal reveal-text delay-300">
+                    “万物静默如谜。我行走在凝固的时光里，成为了这幅画卷中唯一的流逝。”
+                </div>
+            </div>
+            <div class="image-group">
+                <div class="img-wrapper reveal reveal-img delay-100">
+                    <img src="images/stone-forest.png" class="main-img" alt="石林" onerror="this.src='https://placehold.co/800x500/fafafa/ccc?text=Petrified+Forest'">
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+                </div>
+                <img src="images/stone-detail.png" class="inset-img reveal reveal-left delay-300" alt="晶体细节" onerror="this.src='https://placehold.co/400x300/fff/ccc?text=Crystal+Leaf'">
+            </div>
+        </section>
+
+        <section class="story-block reverse">
+            <div class="text-group">
+                <span class="chapter-tag reveal reveal-text">04</span>
+                <h2 class="location-name reveal reveal-text delay-100">云溪 · 终焉之湖</h2>
+                <p class="story-p reveal reveal-text delay-200">
+                    这里是风停止的地方，也是“共鸣”汇聚的终点。云溪并非普通的水域，它是一面液态的镜子，封存了这颗星球最纯净的倒影。
+                </p>
+                <p class="story-p reveal reveal-text delay-200">
+                    晓星在岸边驻足了整整三个季节，看着那一株云莲缓缓绽放。他以为自己发现了世界的中心，却没想到，他只是找到了一把钥匙。
+                </p>
+                <div class="quote reveal reveal-text delay-300">
+                    “我曾漂泊了无尽的时光，只为在此刻，成为你的第一个故事。”
+                </div>
+            </div>
+            <div class="image-group">
+                <div class="img-wrapper reveal reveal-img delay-100">
+                    <img src="images/cloud-creek.png" class="main-img" alt="云溪全景" onerror="this.src='https://placehold.co/800x500/e6f7ff/006D9E?text=Cloud+Creek'">
+                    <div class="corner c-tl"></div>
+                    <div class="corner c-tr"></div>
+                    <div class="corner c-bl"></div>
+                    <div class="corner c-br"></div>
+                </div>
+                <img src="images/cloud-creek-girl.png" class="inset-img reveal reveal-right delay-300" alt="云莲与少女" onerror="this.src='https://placehold.co/400x300/fff/006D9E?text=The+Lotus'">
+            </div>
+        </section>
+
+    </div>
+    
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-title">原初地球</div>
+                <p class="brand-desc">
+                    献给所有在这颗星球上<br>
+                    孤独行走、寻找共鸣的旅人。<br>
+                    <br>
+                    “愿你的旅途，终有回响。”
+                </p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">导航</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">原点 · Origin</a></li>
+                    <li><a href="laws.html">法则 · Laws</a></li>
+                    <li><a href="travels.html">行记 · Travels</a></li>
+                    <li><a href="echoes.html">回响 · Echoes</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">关于本站</div>
+                <div class="student-info">
+                    <p><span class="info-label">课程</span><span>网页设计与制作</span></p>
+                    <p><span class="info-label">设计</span><span>末云</span></p>
+                    <p><span class="info-label">邮箱</span><span>7918582@qq.com</span></p>
+                    <p><span class="info-label">工具</span><span>HTML5 / CSS3 / JavaScript</span></p>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 The Prime Earth Project. Designed by Moyun. All Rights Reserved.
+        </div>
+    </footer>
+    
+    <script src="js/main.js"></script>
+</body>
+</html>

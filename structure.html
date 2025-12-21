@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>网站布局框架图 - 原初地球</title>
+    <style>
+        :root {
+            --color-nav: #2980b9;    /* 蓝色：导航 */
+            --color-header: #8e44ad; /* 紫色：头部 */
+            --color-main: #27ae60;   /* 绿色：内容 */
+            --color-footer: #e67e22; /* 橙色：页脚 */
+            --color-bg: #f5f6fa;
+            --border-style: 2px dashed;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #fff;
+            padding: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 50px;
+            justify-content: center;
+        }
+
+        h2 { text-align: center; color: #333; margin-bottom: 10px; }
+        .desc { text-align: center; color: #666; font-size: 0.9rem; margin-bottom: 20px; }
+
+        /* --- 通用线框容器 --- */
+        .wireframe-container {
+            width: 360px; /* 模拟手机/平板长宽比，或者缩小版PC */
+            background: #fff;
+            border: 2px solid #ccc;
+            padding: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        /* --- 标签样式 --- */
+        .label {
+            position: absolute;
+            top: -10px; left: 10px;
+            background: #fff;
+            padding: 0 5px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .tag {
+            font-size: 0.7rem;
+            color: #fff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            display: inline-block;
+            margin-left: 5px;
+        }
+
+        /* --- 区域盒子 --- */
+        .box {
+            border: var(--border-style);
+            padding: 15px;
+            position: relative;
+            min-height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #555;
+            background: rgba(255,255,255,0.8);
+        }
+
+        /* 颜色区分 */
+        .box-nav { border-color: var(--color-nav); color: var(--color-nav); }
+        .box-nav .label { color: var(--color-nav); }
+        .box-nav .tag { background: var(--color-nav); }
+
+        .box-header { border-color: var(--color-header); color: var(--color-header); }
+        .box-header .label { color: var(--color-header); }
+
+        .box-main { border-color: var(--color-main); color: var(--color-main); flex: 1; }
+        .box-main .label { color: var(--color-main); }
+        .box-main .tag { background: var(--color-main); }
+
+        .box-footer { border-color: var(--color-footer); color: var(--color-footer); margin-top: auto; }
+        .box-footer .label { color: var(--color-footer); }
+
+        /* --- 特定布局模拟 --- */
+        
+        /* 首页：Flex居中 */
+        .layout-hero {
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* 垂直居中 */
+            align-items: center;     /* 水平居中 */
+            background: #f0f3f6;
+            border: 2px solid #333; /* 实线代表视口 */
+        }
+        .hero-content {
+            border: 2px solid var(--color-main);
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* 法则：左右交替 */
+        .layout-z-pattern {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .row-normal { display: flex; flex-direction: row; gap: 5px; }
+        .row-reverse { display: flex; flex-direction: row-reverse; gap: 5px; }
+        .sub-box { border: 1px solid #ccc; flex: 1; height: 30px; display: flex; align-items: center; justify-content: center; font-size: 0.7rem;}
+
+        /* 行记：中间线 + 绝对定位 */
+        .layout-timeline {
+            position: relative;
+            padding: 0 10px;
+        }
+        .svg-line {
+            position: absolute;
+            left: 50%; top: 0; bottom: 0;
+            width: 2px;
+            background: red;
+            transform: translateX(-50%);
+            z-index: 0;
+        }
+        .block-left { margin-right: 50%; border-right: 2px solid red; }
+        .block-right { margin-left: 50%; border-left: 2px solid red; }
+
+        /* 回响：Grid重叠 */
+        .layout-stack {
+            display: grid;
+            width: 100%;
+            height: 150px;
+            place-items: center;
+            border: 1px dashed #999;
+        }
+        .stack-card {
+            grid-area: 1 / 1; /* 核心代码 */
+            width: 80%;
+            height: 80%;
+            background: rgba(39, 174, 96, 0.1);
+            border: 2px solid var(--color-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        /* 模拟重叠效果 */
+        .c1 { transform: scale(0.9) translateX(-20px); opacity: 0.5; z-index: 1;}
+        .c2 { transform: scale(1) translateX(0); z-index: 2; background: #fff;}
+        .c3 { transform: scale(0.9) translateX(20px); opacity: 0.5; z-index: 1;}
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h2>首页：原点 (Origin)</h2>
+        <div class="desc">全屏 Flex 居中布局 + 绝对定位层级</div>
+        <div class="wireframe-container">
+            
+            <div class="box box-nav" style="position: absolute; top:0; left:0; right:0; z-index: 10;">
+                <span class="label">Nav (Fixed)</span>
+                Flex: Space-Between
+            </div>
+
+            <div class="layout-hero">
+                <span class="label" style="top:50px; left:10px;">Hero Container (100vh)</span>
+                
+                <div style="position: absolute; inset:0; z-index:0; background:#eee; display:flex; justify-content:center; align-items:center; color:#999;">
+                    Background Layer (Absolute)
+                </div>
+
+                <div class="hero-content" style="z-index: 10; background: white;">
+                    <span class="label">Hero Content</span>
+                    <span class="tag">Flex Item</span>
+                    <br>
+                    Centered Content<br>(H1, H2, Button)
+                </div>
+
+                <div class="box box-footer" style="position:absolute; bottom:10px; width:90%; border-style:dashed;">
+                    <span class="label">Hero Footer (Absolute)</span>
+                    Designed by Moyun
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <h2>法则：法则 (Laws)</h2>
+        <div class="desc">垂直流 + Flex 行反转布局</div>
+        <div class="wireframe-container" style="min-height: 500px;">
+            <div class="box box-nav"><span class="label">Nav</span></div>
+            <div class="box box-header" style="height: 60px;"><span class="label">Header</span>Title Group</div>
+            
+            <div class="box box-main layout-z-pattern">
+                <span class="label">Laws Container</span>
+                
+                <div class="box row-normal">
+                    <div class="sub-box" style="width: 30%;">Icon</div>
+                    <div class="sub-box" style="width: 70%;">Text Content</div>
+                    <span class="label" style="position:relative; top:-15px; font-size:0.6rem;">Flex-Direction: Row</span>
+                </div>
+
+                <div class="box row-reverse">
+                    <div class="sub-box" style="width: 30%;">Icon</div>
+                    <div class="sub-box" style="width: 70%;">Text Content</div>
+                    <span class="label" style="position:relative; top:-15px; font-size:0.6rem; color:red;">Flex-Direction: Row-Reverse</span>
+                </div>
+
+            </div>
+
+            <div class="box box-footer"><span class="label">Footer</span>Copyright</div>
+        </div>
+    </div>
+
+    <div>
+        <h2>行记：行记 (Travels)</h2>
+        <div class="desc">绝对定位中轴 + 左右交错布局</div>
+        <div class="wireframe-container" style="min-height: 500px;">
+            <div class="box box-nav"><span class="label">Nav</span></div>
+            <div class="box box-header" style="height: 60px;"><span class="label">Header</span></div>
+            
+            <div class="box box-main layout-timeline">
+                <span class="label">Content Wrapper (Relative)</span>
+                
+                <div class="svg-line">
+                    <div style="background:red; color:white; font-size:0.6rem; width:60px; margin-left:5px; margin-top:100px;">SVG Path (Absolute)</div>
+                </div>
+
+                <div class="box row-normal" style="margin-bottom: 20px;">
+                    <div class="sub-box" style="width: 45%;">Text</div>
+                    <div class="sub-box" style="width: 45%; margin-left:auto;">Image</div>
+                </div>
+
+                <div class="box row-reverse">
+                    <div class="sub-box" style="width: 45%;">Text</div>
+                    <div class="sub-box" style="width: 45%; margin-right:auto;">Image</div>
+                </div>
+
+            </div>
+
+            <div class="box box-footer"><span class="label">Footer</span></div>
+        </div>
+    </div>
+
+    <div>
+        <h2>回响：回响 (Echoes)</h2>
+        <div class="desc">CSS Grid 堆叠布局 (Superposition)</div>
+        <div class="wireframe-container" style="min-height: 500px;">
+            <div class="box box-nav"><span class="label">Nav</span></div>
+            <div class="box box-header" style="height: 60px;"><span class="label">Header</span></div>
+            
+            <div class="box box-main">
+                <span class="label">Echoes Container</span>
+                
+                <div style="text-align:center; margin-bottom:5px;">Carousel Wrapper (Flex Center)</div>
+
+                <div class="layout-stack">
+                    <span class="label" style="top:5px; left:5px;">Track (Grid)</span>
+                    
+                    <div class="stack-card c1">Prev Card</div>
+                    
+                    <div class="stack-card c3">Next Card</div>
+
+                    <div class="stack-card c2">
+                        Active Card<br>
+                        <span class="tag">Grid-Area: 1 / 1</span>
+                    </div>
+
+                </div>
+                <div style="font-size:0.7rem; text-align:center; color:#999; margin-top:5px;">所有卡片重叠在同一个 Grid 单元格</div>
+            </div>
+
+            <div class="box box-footer"><span class="label">Footer</span></div>
+        </div>
+    </div>
+
+</body>
+</html>
