@@ -1,57 +1,70 @@
 /* js/main.js */
-/* ==============================
-   Global Loading Screen Logic
-   ============================== */
+
+/* ==========================================================================
+   1. 全局开场动画 (Global Entrance Animation)
+   ========================================================================== */
 window.addEventListener('load', function() {
-    // 页面所有资源（图片等）加载完毕后
+    // 等待页面所有资源（图片等）加载完毕
     const loader = document.getElementById('loader');
+    
     if (loader) {
-        // 延迟一小会儿，让用户看清 loading，增加仪式感
+        // 延迟 500ms 让用户看一眼 Loading 界面，更有仪式感
         setTimeout(() => {
+            // 1. 添加 .loaded 类 -> 触发 CSS 的 opacity: 0 动画 (淡出)
             document.body.classList.add('loaded');
-            // 动画结束后移除元素，释放内存
+            
+            // 2. 等待 CSS 动画播完 (0.8s) 后，把 loader 从网页里彻底删掉
+            // 回归最稳妥的做法，防止它挡住页面或造成闪烁
             setTimeout(() => {
                 loader.remove();
             }, 800); 
+            
         }, 500); 
     }
 });
 
+
+/* ==========================================================================
+   2. 滚动显现动画 (Scroll Reveal)
+   ========================================================================== */
 document.addEventListener("DOMContentLoaded", function() {
-    // 1. 创建观察者对象
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
-                // 进入视口，添加 active 类
+                // 元素进入视口，添加 active 类触发 CSS 动画
                 entry.target.classList.add('active');
-                // 动画只播放一次，停止观察
+                // 动画只播一次，不再观察
                 observer.unobserve(entry.target); 
             }
         });
     }, {
-        threshold: 0.1, // 露出10%触发
-        rootMargin: "0px 0px -50px 0px" // 触发线向上偏移50px
+        threshold: 0.1, // 露出 10% 时触发
+        rootMargin: "0px 0px -50px 0px" // 触发线向上偏移 50px
     });
 
-    // 2. 选取所有带有 .reveal 的元素
+    // 选取所有带有 .reveal 的元素
     const hiddenElements = document.querySelectorAll('.reveal');
     hiddenElements.forEach((el) => observer.observe(el));
 });
-/* ==============================
-   首页打字机特效 (Typewriter Effect)
-   ============================== */
+
+
+/* ==========================================================================
+   3. 首页专属特效 (Home Only)
+   ========================================================================== */
 document.addEventListener("DOMContentLoaded", function() {
-    // 检测是否有诗句容器（只在首页运行）
+    
+    // --- A. 打字机特效 ---
     const poemContainer = document.querySelector('.hero-poem');
     
     if (poemContainer) {
         const lines = poemContainer.querySelectorAll('p');
-        
-        // 1. 提取原文并清空
+        // 提取文字内容
         const texts = Array.from(lines).map(p => p.innerText);
+        
+        // 清空内容，准备打字
         lines.forEach(p => {
             p.innerText = '';
-            p.style.opacity = '1'; // 让 p 标签可见（内容为空）
+            p.style.opacity = '1';
         });
 
         let lineIndex = 0;
@@ -60,33 +73,27 @@ document.addEventListener("DOMContentLoaded", function() {
         function typeWriter() {
             if (lineIndex < texts.length) {
                 const currentLine = lines[lineIndex];
-                
-                // 给当前正在打字的行加光标
-                currentLine.classList.add('typing-active');
+                currentLine.classList.add('typing-active'); // 加光标
 
                 if (charIndex < texts[lineIndex].length) {
                     currentLine.innerText += texts[lineIndex].charAt(charIndex);
                     charIndex++;
-                    // 打字速度 (越小越快，建议 50-80ms)
-                    setTimeout(typeWriter, 80); 
+                    setTimeout(typeWriter, 80); // 打字速度
                 } else {
                     //这一行打完了
-                    currentLine.classList.remove('typing-active'); // 移除光标
+                    currentLine.classList.remove('typing-active'); // 移光标
                     lineIndex++;
                     charIndex = 0;
-                    // 换行停顿 (建议 500ms)
-                    setTimeout(typeWriter, 600); 
+                    setTimeout(typeWriter, 600); // 换行停顿
                 }
             }
         }
 
-        // 延迟 1.5秒 开始打字（等标题动画播完）
+        // 延迟 1.5秒 开始打字（等开场动画播完）
         setTimeout(typeWriter, 1500);
     }
     
-    /* ==============================
-       (可选) 鼠标轻微视差效果
-       ============================== */
+    // --- B. 鼠标视差特效 (Parallax) ---
     const heroBg = document.querySelector('.hero-bg');
     if (heroBg) {
         document.addEventListener('mousemove', (e) => {
@@ -97,38 +104,37 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-/* ==============================
-   回响页：轮播逻辑 (Carousel Logic)
-   ============================== */
 
+
+/* ==========================================================================
+   4. 回响页轮播系统 (Carousel System)
+   ========================================================================== */
 let currentSlide = 0;
 const slides = document.querySelectorAll('.echo-card');
 const dots = document.querySelectorAll('.dot');
 const totalSlides = slides.length;
 
-// 初始化：如果页面上有轮播，就运行一次状态更新
+// 如果当前页面有轮播组件，才运行逻辑
 if (slides.length > 0) {
     updateCarousel();
 }
 
-// 切换幻灯片 (-1 是上一张, 1 是下一张)
+// 切换幻灯片 (-1: 上一张, 1: 下一张)
 function changeSlide(direction) {
     currentSlide += direction;
-    
-    // 循环逻辑：最后一张点下一张 -> 第一张
+    // 循环逻辑
     if (currentSlide >= totalSlides) currentSlide = 0;
     if (currentSlide < 0) currentSlide = totalSlides - 1;
-    
     updateCarousel();
 }
 
-// 直接跳转到某一张
+// 点击圆点跳转
 function jumpToSlide(index) {
     currentSlide = index;
     updateCarousel();
 }
 
-// 核心函数：更新所有卡片的类名 (Active / Prev / Next)
+// 更新视图状态 (Active / Prev / Next)
 function updateCarousel() {
     slides.forEach((slide, index) => {
         // 先清除所有状态
@@ -138,16 +144,18 @@ function updateCarousel() {
             slide.classList.add('active');
         } 
         else if (index < currentSlide) {
-            slide.classList.add('prev'); // 在左边
+            slide.classList.add('prev');
         } 
         else {
-            slide.classList.add('next'); // 在右边
+            slide.classList.add('next');
         }
     });
 
     // 更新底部圆点
-    dots.forEach((dot, index) => {
-        if (index === currentSlide) dot.classList.add('active');
-        else dot.classList.remove('active');
-    });
+    if (dots.length > 0) {
+        dots.forEach((dot, index) => {
+            if (index === currentSlide) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+    }
 }
