@@ -7,10 +7,33 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&family=Noto+Sans+SC:wght@300;400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
-
-
+    
+    <style>
+        /* 粒子层：不挡鼠标点击 */
+        .particles-container { pointer-events: none; z-index: -5; position: fixed; width: 100%; height: 100%; }
+        .dust { background: rgba(255,255,255,0.8); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
+        
+        /* 身份标签入场动画 */
+        .site-badge {
+            display: inline-block;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 4px 12px;
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(4px);
+            font-family: 'Noto Sans SC', sans-serif;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeIn 1s ease forwards 0s;
+        }
+    </style>
 </head>
+
 <body class="home-page">
+    
     <div id="loader">
         <div class="loader-content">
             <div class="spinner"></div>
@@ -18,6 +41,10 @@
         </div>
     </div>
     
+    <div class="hero-bg"></div>
+    <div class="black-overlay"></div>
+    <div class="noise-overlay"></div>
+
     <div class="particles-container">
         <div class="dust d1"></div>
         <div class="dust d2"></div>
@@ -26,32 +53,35 @@
     </div>
 
     <nav style="background: linear-gradient(to bottom, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);">
-        <a href="index.html" class="nav-item active" style="color: #fff; opacity: 1;">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
-            <span>原点</span>
+        <a href="index.html" class="nav-brand">
+            原初地球
+            <span class="brand-en">THE PRIME EARTH</span>
         </a>
-        <a href="laws.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm9 17h-2.5v-7h-13v7H3v-8.21L12 4.69l9 8.1v8.21z"/></svg>
-            <span>法则</span>
-        </a>
-        <a href="travels.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
-            <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 6l-2 10 2 2 2-2-2-10z" fill="currentColor"/></svg>
-            <span>行记</span>
-        </a>
-        <a href="echoes.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
-            <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12h3v-2H3v2zm18-2v2h3v-2h-3zm-6-4h-2v12h2V6zm-6 4h2v4H9v-4z"/></svg>
-            <span>回响</span>
-        </a>
+
+        <div class="nav-links">
+            <a href="index.html" class="nav-item active" style="color: #fff; opacity: 1;">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zm0-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+                <span>原点</span>
+            </a>
+            <a href="laws.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm9 17h-2.5v-7h-13v7H3v-8.21L12 4.69l9 8.1v8.21z"/></svg>
+                <span>法则</span>
+            </a>
+            <a href="travels.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
+                <svg class="nav-icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 6l-2 10 2 2 2-2-2-10z" fill="currentColor"/></svg>
+                <span>行记</span>
+            </a>
+            <a href="echoes.html" class="nav-item" style="color: rgba(255,255,255,0.7);">
+                <svg class="nav-icon" viewBox="0 0 24 24"><path d="M3 12h3v-2H3v2zm18-2v2h3v-2h-3zm-6-4h-2v12h2V6zm-6 4h2v4H9v-4z"/></svg>
+                <span>回响</span>
+            </a>
+        </div>
     </nav>
 
     <div class="hero-container">
-        <div class="hero-bg"></div>
-        
-        <div class="black-overlay"></div>
-        
-        <div class="noise-overlay"></div>
-
         <div class="hero-content">
+            <div class="site-badge">INTERACTIVE VISUAL NOVEL WEB</div>
+
             <h1 class="hero-title">我是这颗星球唯一的读者</h1>
             <h2 class="hero-subtitle">直到我遇见了你——我唯一的书</h2>
 
@@ -64,21 +94,132 @@
             <a href="travels.html" class="enter-btn">开启旅程</a>
         </div>
 
-        <div class="hero-footer">
-            <div class="hero-info">
-                <span>Designed by Moyun</span>
-                <span class="separator">/</span>
-                <span>Web Design</span>
+        <a href="#observation" class="scroll-indicator">
+            <span></span>
+            <span></span>
+        </a>
+    </div> 
+    
+    <section id="observation" class="home-section worldview-section">
+        <div class="showcase-container">
+            
+            <h2 class="section-title">观测记录 · OBSERVATION</h2>
+
+            <div class="showcase-item reveal">
+                <div class="sc-text-box">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 2L1 12h3v9h6v-6h4v6h6v-9h3L12 2zm9 17h-2.5v-7h-13v7H3v-8.21L12 4.69l9 8.1v8.21z"/></svg>
+                    </div>
+                    <h3 class="sc-title">秩序的终焉</h3>
+                    <h4 class="sc-subtitle">ABSOLUTE LAWS</h4>
+                    <p class="sc-desc">
+                        当恒星停止呼吸，物理法则便成了这颗星球最后的墓碑。<br>
+                        在这里，重力是可被篡改的参数，时间是早已凝固的琥珀。<br>
+                        我们不遵守规则，我们只是在规则的缝隙中，苟延残喘。
+                    </p>
+                    <a href="laws.html" class="sc-link">查阅禁忌档案 &rarr;</a>
+                </div>
+                <div class="sc-img-box">
+                    <div class="sc-placeholder-img img-law" style="background-image: url('images/law-bg.png');"></div>
+                </div>
             </div>
-            <div class="hero-copyright">
-                &copy; 2025 The Prime Earth Project. All Rights Reserved.
+
+            <div class="showcase-item reverse reveal">
+                <div class="sc-text-box">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" fill="none"/><path d="M12 6l-2 10 2 2 2-2-2-10z" fill="currentColor"/></svg>
+                    </div>
+                    <h3 class="sc-title">孤独的丈量</h3>
+                    <h4 class="sc-subtitle">LONELY JOURNEY</h4>
+                    <p class="sc-desc">
+                        从坠星高地的废墟，到云溪深处的静默。<br>
+                        我用双脚丈量着世界的尸体，试图寻找另一个心跳的频率。<br>
+                        这不是旅行，而是一场漫长的、没有终点的朝圣。
+                    </p>
+                    <a href="travels.html" class="sc-link">跟随行者足迹 &rarr;</a>
+                </div>
+                <div class="sc-img-box">
+                    <div class="sc-placeholder-img img-travel" style="background-image: url('images/travel-bg.png');"></div>
+                </div>
+            </div>
+
+            <div class="showcase-item reveal">
+                <div class="sc-text-box">
+                    <div class="sc-icon">
+                        <svg viewBox="0 0 24 24"><path d="M3 12h3v-2H3v2zm18-2v2h3v-2h-3zm-6-4h-2v12h2V6zm-6 4h2v4H9v-4z"/></svg>
+                    </div>
+                    <h3 class="sc-title">数据的余温</h3>
+                    <h4 class="sc-subtitle">DATA ECHOES</h4>
+                    <p class="sc-desc">
+                        记忆是会被风化的，但数据不会。<br>
+                        那些被遗忘的爱意、悔恨与祈祷，都被编码进了光流之中。<br>
+                        触碰这些回响，你是否能感受到——我们也曾鲜活地存在过？
+                    </p>
+                    <a href="echoes.html" class="sc-link">聆听无名之声 &rarr;</a>
+                </div>
+                <div class="sc-img-box">
+                    <div class="sc-placeholder-img img-echo" style="background-image: url('images/echo-bg.png');"></div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="home-section news-section">
+        <div class="section-content">
+            <h2 class="section-title">系统日志 · SYSTEM LOGS</h2>
+            <ul class="news-list">
+                <li class="news-item">
+                    <span class="news-date">2025.12.20</span>
+                    <span class="news-cat">[数据]</span>
+                    <span class="news-text">检测到“坠星高地”出现异常引力波动，已归档。</span>
+                </li>
+                <li class="news-item">
+                    <span class="news-date">2025.12.18</span>
+                    <span class="news-cat">[修正]</span>
+                    <span class="news-text">“生命固化”法则参数校准完成，区域稳定性提升。</span>
+                </li>
+                <li class="news-item">
+                    <span class="news-date">2025.12.15</span>
+                    <span class="news-cat">[收录]</span>
+                    <span class="news-text">新增 3 条关于“云溪”的观测样本。</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <div class="footer-col">
+                <div class="footer-title">原初地球</div>
+                <p class="brand-desc">
+                    献给所有在这颗星球上<br>
+                    孤独行走、寻找共鸣的旅人。<br>
+                    <br>
+                    “愿你的旅途，终有回响。”
+                </p>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">导航</div>
+                <ul class="footer-links">
+                    <li><a href="index.html">原点 · Origin</a></li>
+                    <li><a href="laws.html">法则 · Laws</a></li>
+                    <li><a href="travels.html">行记 · Travels</a></li>
+                    <li><a href="echoes.html">回响 · Echoes</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <div class="footer-title">关于本站</div>
+                <div class="student-info">
+                    <p><span class="info-label">课程</span><span>网页设计与制作</span></p>
+                    <p><span class="info-label">设计</span><span>末云</span></p>
+                    <p><span class="info-label">邮箱</span><span>7918582@qq.com</span></p>
+                    <p><span class="info-label">工具</span><span>HTML5 / CSS3 / JavaScript</span></p>
+                </div>
             </div>
         </div>
-    </div>
-
-    <style>
-        .dust { background: rgba(255,255,255,0.8); box-shadow: 0 0 10px rgba(255,255,255,0.5); }
-    </style>
+        <div class="copyright">&copy; 2025 The Prime Earth Project. Designed by Moyun. All Rights Reserved.</div>
+    </footer>
 
     <script src="js/main.js"></script>
 </body>
