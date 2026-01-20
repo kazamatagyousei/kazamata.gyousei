@@ -1,5 +1,5 @@
 /* ==========================================================================
-   原初地球 (The Prime Earth) - Final Cleaned Stylesheet
+   原初地球 (The Prime Earth) - Final Fixed Stylesheet
    Design: Moyun | Student ID: 242023126
    ========================================================================== */
 
@@ -29,7 +29,7 @@ body {
    2. 全局组件 (Global Components)
    -------------------------------------------------------------------------- */
 
-/* --- 页面加载遮罩 (Loading Screen) --- */
+/* === Loading Screen === */
 #loader {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     background-color: #fff; z-index: 9999;
@@ -48,14 +48,35 @@ body {
 }
 .loaded #loader { opacity: 0; visibility: hidden; }
 
-/* --- 导航栏 (Navigation) --- */
+/* === Navigation === */
 nav {
-    position: fixed; top: 0; width: 100%; height: var(--nav-height);
-    padding: 0 3rem; display: flex; justify-content: flex-end; align-items: center;
+    justify-content: space-between; 
+    position: fixed; 
+    top: 0; width: 100%; height: var(--nav-height);
+    padding: 0 3rem; 
+    display: flex; align-items: center;
     z-index: 1000;
     background: linear-gradient(to bottom, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.8) 80%, rgba(255,255,255,0) 100%);
     backdrop-filter: blur(5px);
 }
+.nav-links { display: flex; align-items: center; }
+
+/* Left Logo */
+.nav-brand {
+    font-family: 'Noto Serif SC', serif; font-weight: 700; font-size: 1.2rem;
+    color: var(--text-primary); text-decoration: none; letter-spacing: 2px;
+    display: flex; flex-direction: column; line-height: 1; transition: opacity 0.3s;
+}
+.nav-brand:hover { opacity: 0.7; }
+.brand-en {
+    font-size: 0.5rem; font-family: 'Noto Sans SC', sans-serif;
+    color: var(--text-blue); letter-spacing: 1px; margin-top: 3px; font-weight: 400;
+}
+/* Home Page Dark Mode Nav Adapter */
+body.home-page .nav-brand { color: #fff; }
+body.home-page .nav-brand .brand-en { color: rgba(255,255,255,0.6); }
+
+/* Right Links */
 .nav-item {
     display: flex; align-items: center; gap: 8px;
     text-decoration: none; color: var(--text-primary);
@@ -73,10 +94,10 @@ nav {
     content: ''; position: absolute; bottom: -5px; left: 0;
     width: 100%; height: 2px; background-color: var(--text-blue);
 }
-/* 首页深色模式适配 (通过内联样式覆盖, 这里处理hover) */
+/* Home Page Dark Mode Nav Item Override */
 body.home-page .nav-item:hover, body.home-page .nav-item.active { color: #fff !important; }
 
-/* --- 通用头部 (Header) --- */
+/* === Common Header (For Subpages) === */
 header {
     height: 60vh; display: flex; flex-direction: column;
     justify-content: center; align-items: center; text-align: center;
@@ -93,7 +114,7 @@ header {
     opacity: 0; animation: fadeUp 1.2s ease forwards 0.5s;
 }
 
-/* --- 底部 (Footer) --- */
+/* === Footer === */
 footer {
     background-color: #f9fbfc; border-top: 1px solid #e0e6ed;
     padding: 4rem 10% 2rem; color: #556677; font-size: 0.9rem; margin-top: auto;
@@ -124,20 +145,23 @@ footer {
 /* --------------------------------------------------------------------------
    3. 动画与特效系统 (Animations)
    -------------------------------------------------------------------------- */
-/* Reveal 滚动显现 */
 .reveal { opacity: 0; transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1); }
+
+/* 不同类型的初始偏移 */
 .reveal-text { transform: translateY(50px); }
 .reveal-img { transform: scale(0.95); filter: blur(8px); }
 .reveal-left { transform: translateX(-40px); }
 .reveal-right { transform: translateX(40px); }
+
+/* 激活状态：所有样式归位 */
 .reveal.active { opacity: 1; transform: translate(0) scale(1); filter: blur(0); }
 
-/* 延迟类 */
+/* 延迟序列 */
 .delay-100 { transition-delay: 0.1s; }
 .delay-200 { transition-delay: 0.2s; }
 .delay-300 { transition-delay: 0.3s; }
 
-/* 关键帧定义 */
+/* 关键帧动画 */
 @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
 @keyframes fadeIn { to { opacity: 1; } }
 @keyframes spinLoader { to { transform: rotate(360deg); } }
@@ -146,35 +170,40 @@ footer {
     50% { opacity: 0.8; }
     100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
 }
+@keyframes fadeUpSlow { to { opacity: 1; transform: translateY(0); } }
 
 /* --------------------------------------------------------------------------
-   4. 页面专属样式 (Page Specific)
+   4. 首页专属样式 (HOME PAGE SPECIFIC)
    -------------------------------------------------------------------------- */
 
-/* === [Index] 首页 === */
-body.home-page { overflow: hidden; } /* 首页禁止滚动 */
-.hero-container {
-    height: 100vh; width: 100%; display: flex; flex-direction: column;
-    justify-content: center; align-items: center; text-align: center;
-    position: relative; overflow: hidden; background-color: #050505;
+/* A. 基础结构与背景 */
+body.home-page { 
+    overflow-x: hidden; 
+    background-color: #050505; 
+}
+.hero-bg, .black-overlay, .noise-overlay {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -10;
 }
 .hero-bg {
-    position: absolute; top: -5%; left: -5%; width: 110%; height: 110%;
-    z-index: 0; opacity: 1;
-    background-image: url('../images/sky-bg.png'); /* 记得检查图片路径 */
+    opacity: 1;
+    background-image: url('../images/sky-bg.png'); 
     background-size: cover; background-position: center;
     animation: breathe 20s infinite alternate;
 }
 @keyframes breathe { from { transform: scale(1); } to { transform: scale(1.05); } }
-
-.black-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
-    z-index: 1; background-color: rgba(0, 0, 0, 0.3); pointer-events: none;
-}
+.black-overlay { background-color: rgba(0, 0, 0, 0.3); }
 .noise-overlay {
-    position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 2;
-    opacity: 0.3; pointer-events: none;
+    opacity: 0.3; 
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.1'/%3E%3C/svg%3E");
+}
+
+/* B. Hero 容器 */
+.hero-container {
+    height: 100vh; width: 100%; 
+    display: flex; flex-direction: column;
+    justify-content: center; align-items: center; text-align: center;
+    position: relative; 
+    background-color: transparent;
 }
 .hero-content { position: relative; z-index: 10; max-width: 800px; padding: 0 20px; }
 .hero-title {
@@ -203,18 +232,123 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     background-color: #fff; color: #000; padding: 14px 55px;
     box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
 }
-@keyframes fadeUpSlow { to { opacity: 1; transform: translateY(0); } }
 
-/* 首页悬浮页脚 */
-.hero-footer {
-    position: absolute; bottom: 30px; left: 0; width: 100%; text-align: center;
-    color: rgba(255, 255, 255, 0.5); font-size: 0.75rem; z-index: 20; pointer-events: none;
+/* C. 首页内容模块通用样式 (Home Section Shared) */
+.home-section {
+    position: relative;
+    z-index: 10; 
+    padding: 80px 20px;
+    border-top: 1px solid rgba(255,255,255,0.05);
+    color: #fff;
+    transition: background-color 0.3s;
 }
-.hero-info { margin-bottom: 5px; font-weight: 500; letter-spacing: 1px; }
-.separator { margin: 0 10px; opacity: 0.6; color: #8FD3F4; }
-.hero-copyright { opacity: 0.5; font-family: sans-serif; font-size: 0.65rem; }
+.section-content { max-width: 1000px; margin: 0 auto; }
+.section-title {
+    font-family: 'Noto Serif SC', serif; font-size: 1.5rem; color: var(--text-blue);
+    margin-bottom: 3rem; letter-spacing: 4px; text-align: center; position: relative;
+}
+.section-title::after {
+    content: ''; display: block; width: 40px; height: 2px;
+    background: var(--text-blue); margin: 15px auto 0; opacity: 0.5;
+}
 
-/* 首页粒子 & 打字机 */
+/* D. 观测记录板块 (Worldview Z-Pattern) */
+.worldview-section {
+    background-color: #181818; /* 深灰背景 */
+}
+.showcase-container {
+    max-width: 1100px; margin: 0 auto;
+    display: flex; flex-direction: column; gap: 120px;
+}
+.showcase-item {
+    display: flex; align-items: center; justify-content: space-between; gap: 60px;
+}
+.showcase-item.reverse { flex-direction: row-reverse; }
+
+/* 文字部分 */
+.sc-text-box { flex: 1; max-width: 500px; }
+.sc-icon svg { width: 40px; height: 40px; fill: var(--text-blue); margin-bottom: 20px; opacity: 0.8; }
+.sc-title { font-family: 'Noto Serif SC', serif; font-size: 2rem; color: #fff; margin-bottom: 5px; letter-spacing: 2px; }
+.sc-subtitle {
+    font-family: 'Noto Sans SC', sans-serif; font-size: 0.8rem; color: var(--text-blue);
+    text-transform: uppercase; letter-spacing: 4px; margin-bottom: 25px; opacity: 0.7;
+}
+.sc-desc { color: #aab8c2; font-size: 1rem; line-height: 2; margin-bottom: 30px; text-align: justify; }
+.sc-link {
+    display: inline-block; color: #fff; text-decoration: none; font-size: 0.9rem;
+    border-bottom: 1px solid var(--text-blue); padding-bottom: 5px; transition: all 0.3s;
+}
+.sc-link:hover { color: var(--text-blue); padding-right: 10px; }
+
+/* 图片容器 */
+.sc-img-box { flex: 1; height: 350px; position: relative; }
+.sc-placeholder-img {
+    width: 100%; height: 100%; border-radius: 12px;
+    
+    /* ★ 核心修复：确保图片始终覆盖整个框，不被重置为 auto */
+    background-size: cover; 
+    background-position: center; 
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05);
+    transition: transform 0.5s ease; overflow: hidden;
+}
+.showcase-item:hover .sc-placeholder-img {
+    transform: scale(1.02); border-color: rgba(143, 211, 244, 0.3);
+}
+
+/* ★★★ 这里删除了原来的 .img-law { background: ... } 
+   这些简写属性会导致 background-size 被重置，从而引起图片显示不全。
+   删除后，background-size: cover 将正常生效。
+   (你已经在 HTML 里用 style="background-image:..." 指定了图片，所以不需要 CSS 里的占位符了)
+*/
+
+/* E. 系统日志板块 (System Logs) */
+.news-section {
+    background-color: #1f1f1f; /* 稍微亮一点的灰 */
+}
+.news-list { list-style: none; border-top: 1px solid rgba(255,255,255,0.05); }
+.news-item {
+    display: flex; padding: 1.5rem 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    align-items: center; transition: background 0.3s;
+}
+.news-item:hover { background: rgba(255,255,255,0.05); padding-left: 10px; }
+.news-date { font-family: 'Noto Sans SC', sans-serif; color: #888; font-size: 0.9rem; width: 120px; }
+.news-cat { color: var(--text-blue); margin-right: 15px; font-size: 0.9rem; }
+.news-text { color: #ccc; font-size: 0.95rem; }
+
+/* F. 首页页脚覆写 (Home Footer Override) */
+body.home-page footer {
+    position: relative; z-index: 10; margin-top: 0;
+    background-color: rgba(0, 0, 0, 0.75); /* 半透明黑 */
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-top: 1px solid rgba(255,255,255,0.1); color: #ccc;
+}
+body.home-page .footer-title { color: #8FD3F4; text-shadow: 0 0 10px rgba(143, 211, 244, 0.2); }
+body.home-page .footer-links a { color: #aab8c2; }
+body.home-page .footer-links a:hover { color: #fff; text-shadow: 0 0 5px rgba(255,255,255,0.5); }
+body.home-page .info-label { color: #fff; }
+body.home-page .copyright { color: rgba(255,255,255,0.4); }
+
+/* G. 首页其他杂项 (Scroll Arrow, Dust, Typing) */
+.scroll-indicator {
+    position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+    z-index: 20; cursor: pointer; padding-top: 60px;
+}
+.scroll-indicator span {
+    display: block; width: 20px; height: 20px;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.6);
+    border-right: 2px solid rgba(255, 255, 255, 0.6);
+    transform: rotate(45deg); margin: -10px auto;
+    animation: scroll-animate 2s infinite; box-sizing: border-box;
+}
+.scroll-indicator span:nth-child(2) { animation-delay: 0.2s; }
+@keyframes scroll-animate {
+    0% { opacity: 0; transform: rotate(45deg) translate(-20px, -20px); }
+    50% { opacity: 1; }
+    100% { opacity: 0; transform: rotate(45deg) translate(20px, 20px); }
+}
+html { scroll-behavior: smooth; }
+
 .typing-active { border-right: 2px solid #8FD3F4; display: inline-block; animation: blink-caret 0.75s step-end infinite; }
 @keyframes blink-caret { 50% { border-color: transparent; } }
 
@@ -232,12 +366,15 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     100% { transform: translateY(-100vh); opacity: 0; }
 }
 
+/* --------------------------------------------------------------------------
+   5. 子页面样式 (SUB-PAGE SPECIFIC)
+   -------------------------------------------------------------------------- */
+
 /* === [Laws] 法则页 === */
 .laws-container {
     max-width: 1000px; margin: 0 auto; padding-bottom: 10rem;
     display: flex; flex-direction: column; gap: 6rem;
 }
-/* 几何背景动效 */
 .geo-layer {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
     z-index: -1; overflow: hidden; pointer-events: none;
@@ -276,13 +413,11 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     50% { transform: translateY(-30px) rotate(90deg); opacity: 1; }
     100% { transform: translateY(0) rotate(45deg); opacity: 0.6; }
 }
-
 .bg-text {
     position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
     font-size: 15vw; font-weight: 900; color: rgba(0,0,0,0.02);
     pointer-events: none; white-space: nowrap; font-family: Impact, sans-serif; z-index: -1;
 }
-
 .law-card {
     background: #fff; border: 1px solid #edf2f7; padding: 4rem; position: relative;
     overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.03);
@@ -293,7 +428,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     transform: translateY(-5px); box-shadow: 0 20px 60px rgba(0, 109, 158, 0.08); border-color: #e6f7ff;
 }
 .law-card.reverse { flex-direction: row-reverse; }
-
 .law-icon-box {
     flex: 0 0 150px; height: 150px; display: flex; justify-content: center; align-items: center;
     border-radius: 50%; background: #f8fbff; color: var(--text-blue); position: relative;
@@ -304,7 +438,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     border: 1px dashed var(--text-blue); opacity: 0.3; animation: spin 20s linear infinite;
 }
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
 .law-content { flex: 1; }
 .law-header {
     margin-bottom: 1.5rem; border-bottom: 2px solid #f0f4f8; padding-bottom: 1rem;
@@ -318,7 +451,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 }
 .law-desc { font-size: 1rem; color: #556677; line-height: 2; text-align: justify; }
 
-
 /* === [Travels] 行记页 === */
 .bg-travels {
     background-color: #fcfcfc;
@@ -328,11 +460,8 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
         linear-gradient(90deg, rgba(0, 109, 158, 0.1) 1px, transparent 1px),
         radial-gradient(circle at 50% 30%, transparent 0%, rgba(200, 225, 255, 0.2) 90%);
     background-size: 50px 50px, 50px 50px, cover;
-    background-repeat: repeat, repeat, no-repeat;
-    background-position: center top;
+    background-repeat: repeat, repeat, no-repeat; background-position: center top;
 }
-
-.particles-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 0; }
 .particle { position: absolute; opacity: 0.6; animation: floatUp 20s linear infinite; }
 .p1 {
     top: 90%; left: 5%; width: 0; height: 0;
@@ -347,7 +476,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 }
 .p2 { top: 60%; right: 15%; width: 20px; height: 20px; border: 2px solid rgba(0, 109, 158, 0.1); border-radius: 50%; animation-duration: 18s; animation-delay: -5s; }
 .p3 { top: 30%; left: 20%; width: 15px; height: 15px; background: rgba(0, 109, 158, 0.05); transform: rotate(45deg); animation-duration: 30s; }
-
 .content-wrapper { max-width: 1200px; margin: 0 auto; position: relative; padding-bottom: 150px; }
 .journey-path-container {
     position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
@@ -366,7 +494,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 }
 .end-text { font-size: 0.6rem; letter-spacing: 3px; color: var(--text-blue); opacity: 0.5; font-family: sans-serif; }
 @keyframes pulseDot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.5; } }
-
 .story-block {
     display: flex; justify-content: space-between; align-items: flex-start;
     margin-bottom: 18vh; padding: 0 20px; position: relative;
@@ -399,8 +526,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     bottom: -30px; left: -30px; border: 6px solid #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.08); z-index: 2;
 }
 .reverse .inset-img { left: auto; right: -30px; }
-
-/* 取景框效果 */
 .corner {
     position: absolute; width: 20px; height: 20px; border-color: #fff; border-style: solid;
     transition: all 0.4s; opacity: 0; pointer-events: none; z-index: 10; box-shadow: 0 0 5px rgba(0,0,0,0.2);
@@ -412,7 +537,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 .img-wrapper:hover .corner { opacity: 1; width: 30px; height: 30px; }
 .img-wrapper:hover .main-img { transform: scale(1.03); }
 
-
 /* === [Echoes] 回响页 === */
 .bg-echoes-light {
     background-color: #f9fcff;
@@ -422,14 +546,11 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
         radial-gradient(circle at 10% 80%, rgba(143, 211, 244, 0.1) 0%, transparent 40%);
 }
 .echoes-container { max-width: 900px; margin: 0 auto; padding-bottom: 10rem; }
-
-/* 轮播 Carousel */
 .carousel-wrapper {
     position: relative; width: 100%; max-width: 1000px; margin: 0 auto;
     min-height: 800px; display: flex; align-items: center; justify-content: center;
 }
 .carousel-track { display: grid; width: 100%; perspective: 1000px; }
-
 .echo-card {
     grid-area: 1 / 1; width: 100%;
     background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(12px);
@@ -442,8 +563,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 .echo-card.active { opacity: 1; pointer-events: auto; z-index: 2; transform: translateX(0) scale(1); filter: blur(0); }
 .echo-card.prev { opacity: 0; z-index: 1; transform: translateX(-100px) scale(0.9); filter: blur(4px); }
 .echo-card.next { opacity: 0; z-index: 1; transform: translateX(100px) scale(0.9); filter: blur(4px); }
-
-/* 回响卡片内容 */
 .echo-watermark {
     position: absolute; top: -4rem; left: -2rem;
     font-family: 'Noto Serif SC', serif; font-size: 8rem; font-weight: 700;
@@ -467,8 +586,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
     display: block; transition: transform 0.6s ease;
 }
 .echo-card:hover .echo-img-box img { transform: scale(1.05); }
-
-/* 卡片内部动画 */
 .echo-card .echo-title, .echo-card .echo-subtitle, .echo-card .echo-text,
 .echo-card .echo-quote, .echo-card .echo-img-box {
     opacity: 0; transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease;
@@ -483,8 +600,6 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 .echo-card.active .echo-img-box { animation-delay: 0.3s; }
 .echo-card.active .echo-text { animation-delay: 0.4s; }
 .echo-card.active .echo-quote { animation-delay: 0.5s; }
-
-/* 切换按钮 & 指示点 */
 .nav-btn {
     position: absolute; top: 50%; transform: translateY(-50%);
     width: 50px; height: 50px; border-radius: 50%;
@@ -510,29 +625,36 @@ body.home-page { overflow: hidden; } /* 首页禁止滚动 */
 .dot.active { background: var(--text-blue); transform: scale(1.3); }
 
 /* --------------------------------------------------------------------------
-   5. 移动端全局适配 (Mobile)
+   6. 移动端全局适配 (MOBILE RESPONSIVE)
    -------------------------------------------------------------------------- */
 @media (max-width: 768px) {
+    /* Nav & Footer */
     nav { justify-content: center; padding: 0 10px; }
     .nav-item { margin-left: 1rem; font-size: 0.7rem; }
     .footer-container { flex-direction: column; gap: 3rem; }
     
-    /* 隐藏复杂装饰 */
+    /* Home Page */
+    .showcase-item, .showcase-item.reverse { flex-direction: column; gap: 30px; text-align: center; }
+    .sc-text-box { max-width: 100%; }
+    .sc-img-box { width: 100%; height: 250px; }
+    .sc-desc { text-align: left; }
+    .sc-icon { margin: 0 auto 20px; }
+    .news-item { flex-direction: column; align-items: flex-start; gap: 5px; }
+
+    /* Travels Page */
     .journey-path-container { width: 4px; }
     .journey-svg path { d: path("M2,0 L2,3000"); }
     .story-block::after { display: none; }
     .vertical-line, .inset-img { display: none; }
-    
-    /* 堆叠布局 */
     .story-block, .story-block.reverse { flex-direction: column; }
     .text-group, .image-group { width: 100%; }
     
-    /* 法则页卡片 */
+    /* Laws Page */
     .law-card, .law-card.reverse { flex-direction: column; padding: 2rem; text-align: center; }
     .law-header { flex-direction: column; align-items: center; gap: 0.5rem; }
     .law-desc { text-align: left; }
     
-    /* 回响页 */
+    /* Echoes Page */
     .prev-btn { left: 10px; background: rgba(255,255,255,0.8); }
     .next-btn { right: 10px; background: rgba(255,255,255,0.8); }
     .echo-card { padding: 2rem; }
